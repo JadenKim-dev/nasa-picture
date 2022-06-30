@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Row, Col, CardColumns } from 'reactstrap';
 
-import PictureCard from './pictureCard';
+import PictureCard from '../pictureCard/pictureCard';
 import { NASA_BASE_API_URL, NASA_BASE_ASSET_URL } from '../../consts/constants';
-import './style.scss';
+import './pictureCardList.scss';
 
 const PictureCardList = ({
 	pictureList,

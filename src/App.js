@@ -4,10 +4,13 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import 'intersection-observer';
 
 import SearchBox from './components/searchBox/searchBox';
-import PictureCardList from './components/pictureCard/pictureCardList';
+import PictureCardList from './components/pictureCardList/pictureCardList';
 import './style.scss';
-import LikeListSidebar from './components/pictureCard/likeListSidebar';
+import LikeListSidebar from './components/likeListSidebar/likeListSidebar';
 import { getItem, setItem } from './sessionStorage';
+import heartFilledBlue from './heart_filled_blue.svg'
+import heartFilledBlack from './heart_filled_black.svg'
+
 const App = () => {
 	const [pictureList, setPictureList] = useState([]);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -84,37 +87,10 @@ const App = () => {
 								data-clicked={isSidebarOpen}
 								onClick={handleClickSidebarButton}
 							>
-								{isSidebarOpen ? (
-									<svg
-										width="18"
-										height="15"
-										viewBox="0 0 18 15"
-										fill="none"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											fillRule="evenodd"
-											clipRule="evenodd"
-											d="M15.8809 1.36531C14.2309 -0.284688 11.5572 -0.284688 9.90717 1.36531L8.99842 2.27406L8.08717 1.36156C6.43717 -0.287188 3.76217 -0.287188 2.11217 1.36156C0.463423 3.01156 0.463423 5.68656 2.11217 7.33531L3.02467 8.24781L3.02342 8.24906L8.99842 14.2228L15.8809 7.33906C17.5309 5.69031 17.5309 3.01406 15.8809 1.36531Z"
-											fill="#1D6CE0"
-										/>
-									</svg>
-								) : (
-									<svg
-										width="18"
-										height="15"
-										viewBox="0 0 18 15"
-										fill="none"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											fillRule="evenodd"
-											clipRule="evenodd"
-											d="M15.8808 1.36531C14.2308 -0.284688 11.5571 -0.284688 9.90705 1.36531L8.9983 2.27406L8.08705 1.36156C6.43705 -0.287188 3.76205 -0.287188 2.11205 1.36156C0.463301 3.01156 0.463301 5.68656 2.11205 7.33531L3.02455 8.24781L3.0233 8.24906L8.9983 14.2228L15.8808 7.33906C17.5308 5.69031 17.5308 3.01406 15.8808 1.36531Z"
-											fill="black"
-										/>
-									</svg>
-								)}
+								{isSidebarOpen 
+									? <img src={heartFilledBlue} />
+									: <img src={heartFilledBlack} />
+								}
 								<span className="sidebarButtonText">좋아요 리스트 보기</span>
 							</Button>
 						</Row>

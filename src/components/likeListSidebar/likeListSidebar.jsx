@@ -1,8 +1,10 @@
 import React from 'react';
 import { Offcanvas, OffcanvasHeader, OffcanvasBody, Container, Row, Col } from 'reactstrap';
 
-import PictureCard from './pictureCard';
+import PictureCard from '../pictureCard/pictureCard';
+import xShape from './x_shape.svg';
 import styles from './bootstrap.v5.min.module.css';
+import './likeListSidebar.scss'
 
 const LikeListSidebar = ({ isSidebarOpen, closeSidebar, likePictureList, changeIsLikedOf }) => {
 	return (
@@ -21,20 +23,7 @@ const LikeListSidebar = ({ isSidebarOpen, closeSidebar, likePictureList, changeI
 					id="sidebarCloseButton"
 					onClick={closeSidebar}
 				>
-					<svg
-						width="12"
-						height="12"
-						viewBox="0 0 12 12"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							fillRule="evenodd"
-							clipRule="evenodd"
-							d="M11.5738 1.57438L7.14877 6.00063L11.5738 10.4256L10.4263 11.5744L6.00002 7.14813L1.57377 11.5744L0.42627 10.4256L4.85127 6.00063L0.42627 1.57438L1.57377 0.425629L6.00002 4.85188L10.4263 0.425629L11.5738 1.57438Z"
-							fill="white"
-						/>
-					</svg>
+					<img src={xShape} />
 				</button>
 			</OffcanvasHeader>
 

@@ -2,9 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, Input } from 'reactstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { getItem, setItem } from '../../sessionStorage'; 
 import { searchRangeLabelDict, searchRangeKeyEnum } from '../../consts/constants';
-import './style.scss';
+import './searchBox.scss';
 
 const SearchBox = () => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
