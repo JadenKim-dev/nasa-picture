@@ -110,30 +110,29 @@ const PictureCardList = ({
 	};
 
 	return (
-		<CardColumns>
-			<Row>
+		<>
+			<div className='cardList'>
 				{isAllLoaded && !pictureList.length && (
 					<p>{parseSearchContent(location.search)}에 대한 검색결과가 없습니다.</p>
 				)}
 				{pictureList.slice(0, currentViewableCardNum).map((picture) => (
-					<Col xs="2" key={picture.pictureId}>
-						<PictureCard
-							picture={picture}
-							changeIsLikedOf={changeIsLikedOf}
-							isLiked={likePictureIdSet.has(picture.pictureId)}
-						/>
-					</Col>
+					<PictureCard
+						key={picture.pictureId}
+						picture={picture}
+						changeIsLikedOf={changeIsLikedOf}
+						isLiked={likePictureIdSet.has(picture.pictureId)}
+					/>
 				))}
-			</Row>
+			</div>
 			{!isAllLoaded && (
-				<Row style={{ marginTop: 40 }}>
+				<div style={{marginTop:40, display:'flex', justifyContent:'center'}}>
 					{!isLoading && <div ref={setLastOfPage}></div>}
 					<div className="spinner-border text-primary" role="status">
 						<span className="sr-only">Loading...</span>
 					</div>
-				</Row>
+				</div>	
 			)}
-		</CardColumns>
+		</>
 	);
 };
 
