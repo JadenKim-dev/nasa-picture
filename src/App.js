@@ -5,7 +5,7 @@ import 'intersection-observer';
 
 import SearchBox from './components/searchBox/searchBox';
 import PictureCardList from './components/pictureCardList/pictureCardList';
-import './style.scss';
+import './App.scss';
 import LikeListSidebar from './components/likeListSidebar/likeListSidebar';
 import { getItem, setItem } from './sessionStorage';
 import heartFilledBlue from './heart_filled_blue.svg'
@@ -57,20 +57,14 @@ const App = () => {
 				<Container>
 					<section>
 						<Row className="titleRow">
-							<Col
-								xs={{ size: 4, offset: 4 }}
-								style={{ display: 'flex', justifyContent: 'center' }}
-							>
-								<h1 className="title">NASA 사진 검색</h1>
+							<Col xs={{ size: 4, offset: 4 }} className="headerCol">
+								<h1>NASA 사진 검색</h1>
 							</Col>
 						</Row>
 					</section>
 					<section>
 						<Row className="searchBoxRow">
-							<Col
-								xs={{ size: 6, offset: 3 }}
-								style={{ display: 'flex', justifyContent: 'center', marginBottom: 0 }}
-							>
+							<Col xs={{ size: 6, offset: 3 }} className="headerCol">
 								<SearchBox />
 							</Col>
 						</Row>
@@ -88,10 +82,10 @@ const App = () => {
 								onClick={handleClickSidebarButton}
 							>
 								{isSidebarOpen 
-									? <img src={heartFilledBlue} />
-									: <img src={heartFilledBlack} />
+									? <img src={heartFilledBlue} alt="heart open" />
+									: <img src={heartFilledBlack} alt="heart close" />
 								}
-								<span className="sidebarButtonText">좋아요 리스트 보기</span>
+								<span className="sidebarButton__text">좋아요 리스트 보기</span>
 							</Button>
 						</Row>
 					</section>

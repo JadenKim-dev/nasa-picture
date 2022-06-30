@@ -1,52 +1,45 @@
-.justifyCenterCol {
-	display: 'flex' !important; 
-	justify-content: 'center' !important;
+.headerCol {
+	display: 'flex';
+	justify-content: 'center';
 }
 
-#root {
-	background: #FFFFFF;
-	.container {
-		.titleRow {
-			padding-top: 80px;
-			.title {
-				font: {
-					family: 'Noto Sans KR';
-					weight: 700;
-					size: 38px;
-				}
-				line-height: 57px;
-			}
-		}
-		.searchBoxRow {
-			margin-top: 32px;
-		}
-		.sidebarButtonRow {
-			margin-top: 60px;
-			margin-bottom: 20px;
-			
-			.sidebarButton {
-				width: 169px;
-				height: 40px;
-				.sidebarButtonText {
-					margin-left: 9.88px;
-				}
-			}
-
-			.sidebarButton[data-clicked=true] {
-				background: rgba(80, 148, 250, 0.24);
-				color: #1D6CE0;
-			}
-			.sidebarButton[data-clicked=false] {
-				background: rgba(205, 206, 214, 0.08);
-				color: black;
-			}
-		}
-
+.titleRow {
+	padding-top: 80px;
+	h1 {
+		font: 700 38px/57px "Noto Sans KR" ;
 	}
 }
+.searchBoxRow {
+	margin-top: 32px;
+	margin-bottom: 0px;
+}
 
+.sidebarButtonRow {
+	margin-top: 60px;
+	margin-bottom: 20px;
+	
+	.sidebarButton {
+		width: 169px;
+		height: 40px;
 
+		&[data-clicked=true] {
+			background: rgba(80, 148, 250, 0.24);
+			color: #1D6CE0;
+			img {
+				margin-bottom: 3px;
+			}
+		}
 
+		&[data-clicked=false] {
+			background: rgba(205, 206, 214, 0.08);
+			color: black;
+			img {
+				margin-bottom: 3px;
+			}
+		}
 
-
-
+		&__text {
+			margin-left: 9px;
+		}
+	}
+}

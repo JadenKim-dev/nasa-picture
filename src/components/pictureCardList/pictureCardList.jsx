@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { Row, Col, CardColumns } from 'reactstrap';
 
 import PictureCard from '../pictureCard/pictureCard';
 import { NASA_BASE_API_URL, NASA_BASE_ASSET_URL } from '../../consts/constants';
-import './pictureCardList.scss';
+import styles from './pictureCardList.module.scss';
 
 const PictureCardList = ({
 	pictureList,
@@ -110,7 +109,7 @@ const PictureCardList = ({
 
 	return (
 		<>
-			<div className='cardList'>
+			<div className={styles.cardList}>
 				{isAllLoaded && !pictureList.length && (
 					<p>{parseSearchContent(location.search)}에 대한 검색결과가 없습니다.</p>
 				)}

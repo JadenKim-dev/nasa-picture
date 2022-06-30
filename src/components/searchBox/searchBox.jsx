@@ -1,9 +1,9 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, Input } from 'reactstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { searchRangeLabelDict, searchRangeKeyEnum } from '../../consts/constants';
-import './searchBox.scss';
+import styles from './searchBox.module.scss';
 
 const SearchBox = () => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -14,22 +14,19 @@ const SearchBox = () => {
 
 	const location = useLocation();
 
-	const [currSearchedRange, currSearchedContent] = useMemo(() => {
+	useEffect(() => {
 		const queryString = location.search;
 		if(queryString === '') {
 			setSearchRange(searchRangeKeyEnum.TOTAL)
 			setSearchContent('')
-			return [searchRangeKeyEnum.TOTAL, '']
+			return
 		}
 		const equalIndex = queryString.indexOf('=');
 		const searchedRange= queryString.substring(1, equalIndex);
 		const searchedContent = queryString.substring(equalIndex+1);
 		setSearchRange(searchedRange)
 		setSearchContent(searchedContent)
-		return [searchedRange, searchContent]
 	}, [location])
-
-	const isSearchContentExists = useMemo(() => searchContent !== '', [searchContent]);
 
 	const toggle = () => {
 		setDropdownOpen(!dropdownOpen);
@@ -44,7 +41,7 @@ const SearchBox = () => {
 	};
 
 	const handleSearchContentKeyDown = (event) => {
-		if (event.key === 'Enter' && isSearchContentExists) {
+		if (event.key === 'Enter') {
 			search();
 		}
 	};
@@ -53,38 +50,38 @@ const SearchBox = () => {
 		if (searchContent === '') {
 			navigate('/');
 		} else {
-
 			navigate(`/search?${searchRange}=${searchContent}`);
 		}
 	};
 
 	return (
-		<div className="btn-group searchBox">
-			<Dropdown isOpen={dropdownOpen} toggle={toggle}>
-				<DropdownToggle color="none" caret>
+		<div className={`btn-group ${styles.searchBox}`}>
+			<Dropdown className={styles.searchBox__dropdown} isOpen={dropdownOpen} toggle={toggle}>
+				<DropdownToggle className={styles.searchBox__dropdown__toggle} color="none" caret>
 					{searchRangeLabelDict[searchRange]}
 				</DropdownToggle>
-				<DropdownMenu style={{ width: 120 }}>
-					<DropdownItem value={searchRangeKeyEnum.TOTAL} onClick={handleSearchRangeSelect}>
+				<DropdownMenu className={styles.searchBox__dropdown__menu} style={{ width: 120 }}>
+					<DropdownItem className={styles.searchBox__dropdown__menu__item} value={searchRangeKeyEnum.TOTAL} onClick={handleSearchRangeSelect}>
 						{searchRangeLabelDict[searchRangeKeyEnum.TOTAL]}
 					</DropdownItem>
-					<DropdownItem value={searchRangeKeyEnum.TITLE} onClick={handleSearchRangeSelect}>
+					<DropdownItem className={styles.searchBox__dropdown__menu__item} value={searchRangeKeyEnum.TITLE} onClick={handleSearchRangeSelect}>
 						{searchRangeLabelDict[searchRangeKeyEnum.TITLE]}
 					</DropdownItem>
-					<DropdownItem value={searchRangeKeyEnum.DESCRIPTION} onClick={handleSearchRangeSelect}>
+					<DropdownItem className={styles.searchBox__dropdown__menu__item} value={searchRangeKeyEnum.DESCRIPTION} onClick={handleSearchRangeSelect}>
 						{searchRangeLabelDict[searchRangeKeyEnum.DESCRIPTION]}
 					</DropdownItem>
 				</DropdownMenu>
 			</Dropdown>
 			<Input
 				type="text"
+				className={styles.searchBox__input}
 				placeholder="검색어를 입력해주세요"
 				onChange={handleSearchContentChange}
 				onKeyDown={handleSearchContentKeyDown}
 				value={searchContent}
 			/>
 
-			<Button className="searchButton" color="primary" onClick={search}>
+			<Button className={styles.searchBox__searchButton} color="primary" onClick={search}>
 				검색하기
 			</Button>
 		</div>

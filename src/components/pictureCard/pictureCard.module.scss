@@ -1,10 +1,6 @@
-.pictureCardText {
-  font: {
-    family: 'Noto Sans KR';
-  }
-}
+$card-font-family: Noto Sans KR;
 
-.card {
+.pictureCard {
   height: 274px;
   width: 202px;
   border-radius: 4px;
@@ -13,14 +9,15 @@
   border-radius: 4px;
   margin-bottom: 20px;
 
-  .card-img {
+  &__img {
     height: 111px;
     border-radius: 3px 3px 0px 0px;
   }
-  .likeButton {
+  &__likeButton {
     position: absolute;
     top: 8px; 
     right: 9px; 
+
     cursor: pointer;
     background: none;
     border: none;
@@ -29,21 +26,17 @@
     }
   }
 
-  .card-body {
+  &__Body {
     padding: 8px 12px;
-    .card-title {
-      @extend .pictureCardText;
+    &__title {
+      font-family: $card-font-family;
       height: 24px;
       letter-spacing: -0.1px;
       overflow: hidden;
     }
-    .card-subtitle {
-      @extend .pictureCardText;
+    &__subtitle {
+      font: 400 12px/18px $card-font-family;
       height: 18px;
-    
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 18px;
     
       display: block;
       letter-spacing: -0.1px;
@@ -51,14 +44,10 @@
       margin-top: 8px;
     }
 
-    .card-text {
-      @extend .pictureCardText;
+    &__desc {
+      font: 400 14px/22px $card-font-family;
       height: 89px;
-    
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 22px;
-    
+
       letter-spacing: -0.1px;
     
       overflow: hidden;
