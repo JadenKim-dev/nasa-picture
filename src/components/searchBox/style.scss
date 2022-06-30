@@ -1,3 +1,5 @@
+$dropdown-width: 120px;
+
 .searchBoxText {
   font : {
     family: 'Noto Sans KR';
@@ -20,7 +22,7 @@
 
     .dropdown-toggle {
       @extend .searchBoxText;
-      width: 120px;
+      width: $dropdown-width;
       text-align-last:left;
       letter-spacing: -0.1px;
       color: black;
@@ -32,11 +34,11 @@
     }
 
     .dropdown-menu.show {
-      min-width: 120px;
+      min-width: $dropdown-width;
 
       button.dropdown-item {
         @extend .searchBoxText;
-        width: 120px;
+        width: $dropdown-width;
         height: 30px;
 
         color: #2B2D36;
@@ -57,10 +59,7 @@
 
   
   input {
-    box-sizing: border-box;
-    padding: 9px 16px;
-
-    width: 276px;
+    box-sizing: inherit;
     height: 40px;
 
     border: 1px solid #CDCED6;
@@ -75,7 +74,7 @@
   .searchButton {
     @extend .searchBoxText;
     height: 40px;
-    width: 84px;
+    min-width: 84px;
   }
 }
 
