@@ -9,11 +9,11 @@ import { NASA_BASE_API_URL, NASA_BASE_ASSET_URL } from '../../consts/constants';
 import './style.scss';
 
 const PictureCardList = ({
-	onChangeLikePictureList,
+	pictureList,
+	onChangePictureList,
 	likePictureIdList,
 	changeIsLikedOf,
 }) => {
-	const [pictureList, setPictureList] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isAllLoaded, setIsAllLoaded] = useState(false);
 	const [pageNum, setPageNum] = useState(0);
@@ -23,12 +23,6 @@ const PictureCardList = ({
 
 	const location = useLocation();
 
-	const pictureListDict = useMemo(
-		() => Object.assign(
-      {}, 
-      ...pictureList.map((picture) => ({ [picture.pictureId]: picture }))
-    )
-	,[pictureList]);
 	const likePictureIdSet = useMemo(() => new Set(likePictureIdList), [likePictureIdList]);
 
 	const targetUrl = useMemo(() => {
@@ -39,8 +33,9 @@ const PictureCardList = ({
 		} else {
 			url += '?q=*';
 		}
-
-		setPictureList([]);
+		if(!pictureList.length) {
+			onChangePictureList([]);
+		}
 		setCurrentViewableCardNum(0);
 		setIsAllLoaded(false);
 		setPageNum(0);
@@ -101,9 +96,9 @@ const PictureCardList = ({
 					.map((pictureItem) => {
 						const { title, description, nasa_id, date_created } = pictureItem.data[0];
 						const pictureSrc = NASA_BASE_ASSET_URL + `/image/${nasa_id}/${nasa_id}~thumb.jpg`;
-						return { title, description, pictureSrc, date_created, pictureId: shortid.generate() };
+						return { title, description, pictureSrc, date_created, pictureId: nasa_id };
 					});
-				setPictureList(pictureList.concat(pictures));
+				onChangePictureList(pictureList.concat(pictures));
 			})
 			.catch((e) => {
 				console.log(e);
@@ -113,12 +108,6 @@ const PictureCardList = ({
 	const parseSearchContent = (queryString) => {
 		return queryString.substr(queryString.indexOf('=') + 1);
 	};
-
-	useEffect(() => {
-		onChangeLikePictureList(
-      likePictureIdList.map(pictureId => pictureListDict[pictureId])
-		);
-	}, [likePictureIdList]);
 
 	return (
 		<CardColumns>

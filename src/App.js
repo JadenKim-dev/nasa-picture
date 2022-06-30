@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'reactstrap';
 import 'intersection-observer';
@@ -7,20 +7,28 @@ import SearchBox from './components/searchBox/searchBox';
 import PictureCardList from './components/pictureCard/pictureCardList';
 import './style.scss';
 import LikeListSidebar from './components/pictureCard/likeListSidebar';
-
+import { getItem, setItem } from './sessionStorage';
 const App = () => {
+	const [pictureList, setPictureList] = useState([]);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const [likePictureList, setLikePictureList] = useState([]);
-	const [likePictureIdList, setLikePictureIdList] = useState([]);
 
-	const changeIsLikedOf = (pictureId) => {
-		const findIdx = likePictureIdList.indexOf(pictureId);
+	useEffect(() => {
+		setLikePictureList(getItem('likePictureList'))
+	}, [])
+
+	const likePictureIdList = useMemo(() => (
+		likePictureList.map(picture => picture.pictureId)
+	), [likePictureList])
+
+	const changeIsLikedOf = (picture) => {
+		const findIdx = likePictureIdList.indexOf(picture.pictureId);
 		if (findIdx === -1) {
-			setLikePictureIdList(likePictureIdList.concat([pictureId]));
+			setLikePictureList([picture].concat(likePictureList));
 		} else {
-			const newLikePictureIdList = likePictureIdList.slice();
-			newLikePictureIdList.splice(findIdx, 1);
-			setLikePictureIdList(newLikePictureIdList);
+			const newLikePictureList = likePictureList.slice();
+			newLikePictureList.splice(findIdx, 1);
+			setLikePictureList(newLikePictureList);
 		}
 	};
 
@@ -31,10 +39,14 @@ const App = () => {
 	const closeSidebar = () => {
 		setIsSidebarOpen(false);
 	};
+	
+	const onChangePictureList = (newPictureList) => {
+		setPictureList(newPictureList);
+	}
 
-	const onChangeLikePictureList = (likePictureList) => {
-		setLikePictureList(likePictureList.reverse());
-	};
+	useEffect(() => {
+		setItem('likePictureList', likePictureList)
+	}, [likePictureList])
 
 	return (
 		<BrowserRouter>
@@ -114,7 +126,8 @@ const App = () => {
 									path="*"
 									element={
 										<PictureCardList
-											onChangeLikePictureList={onChangeLikePictureList}
+											pictureList={pictureList}
+											onChangePictureList={onChangePictureList}
 											likePictureIdList={likePictureIdList}
 											changeIsLikedOf={changeIsLikedOf}
 										/>
