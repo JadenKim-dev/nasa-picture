@@ -5,74 +5,10 @@
 }
 
 .cardList {
-	margin: -1rem;
   display: flex;
   justify-content: left;
 	flex-wrap: wrap;
   column-gap: 1.25rem;
-	
-	.card {
-		height: 274px;
-		width: 202px;
-		border-radius: 4px;
-
-		box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
-		border-radius: 4px;
-
-		.card-img {
-			height: 111px;
-			border-radius: 3px 3px 0px 0px;
-		}
-		.likeButton {
-			position: absolute;
-			top: 8px; 
-			right: 9px; 
-			cursor: pointer;
-			background: none;
-			border: none;
-			svg {
-				pointer-events: none;
-			}
-		}
-
-		.card-body {
-			padding: 8px 12px;
-			.card-title {
-				@extend .pictureCardText;
-				height: 24px;
-				letter-spacing: -0.1px;
-
-				overflow: hidden;
-			}
-			.card-subtitle {
-				@extend .pictureCardText;
-				height: 18px;
-
-				font-weight: 400;
-				font-size: 12px;
-				line-height: 18px;
-
-				display: block;
-				letter-spacing: -0.1px;
-				overflow: hidden;
-				margin-top: 8px;
-			}
-
-			.card-text {
-				@extend .pictureCardText;
-				height: 89px;
-
-				font-weight: 400;
-				font-size: 14px;
-				line-height: 22px;
-
-				letter-spacing: -0.1px;
-
-				overflow: hidden;
-			}
-		}
-
-  }
 }
 
 .likeListSidebar {
@@ -126,6 +62,7 @@
 
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
+  margin-bottom: 20px;
 
   .card-img {
     height: 111px;

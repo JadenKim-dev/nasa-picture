@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Row, Col, CardColumns } from 'reactstrap';
-import shortid from 'shortid';
 
 import PictureCard from './pictureCard';
 import { NASA_BASE_API_URL, NASA_BASE_ASSET_URL } from '../../consts/constants';
@@ -124,6 +123,7 @@ const PictureCardList = ({
 					/>
 				))}
 			</div>
+
 			{!isAllLoaded && (
 				<div style={{marginTop:40, display:'flex', justifyContent:'center'}}>
 					{!isLoading && <div ref={setLastOfPage}></div>}
