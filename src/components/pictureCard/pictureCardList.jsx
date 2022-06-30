@@ -29,19 +29,19 @@ const PictureCardList = ({
 		const { pathname, search } = location;
 		let url = NASA_BASE_API_URL + '/search';
 		if (pathname !== '/') {
-			url += search;
+			url += `${search}&media_type=image`;
 		} else {
-			url += '?q=*';
+			url += '?media_type=image';
 		}
-		if(!pictureList.length) {
-			onChangePictureList([]);
-		}
+		return url;
+	}, [location]);
+
+	useEffect(() => {
+		onChangePictureList([]);
 		setCurrentViewableCardNum(0);
 		setIsAllLoaded(false);
 		setPageNum(0);
-
-		return url;
-	}, [location]);
+	}, [location])
 
 	useEffect(() => {
 		let observer;
