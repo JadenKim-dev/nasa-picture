@@ -6,7 +6,7 @@ import xShape from './x_shape.svg';
 import styles from './bootstrap.v5.min.module.css';
 import localStyles from './likeListSidebar.module.scss'
 
-const LikeListSidebar = ({ isSidebarOpen, closeSidebar, likePictureList, changeIsLikedOf }) => {
+const LikeListSidebar = ({ isSidebarOpen, likePictureList, closeSidebar, changeIsLikedOf }) => {
 	return (
 		<Offcanvas
 			className={`${styles['offcanvas-end']} ${styles['offcanvas']} ${styles['fade']} ${styles['show']} ${localStyles['likeListSidebar']}`}

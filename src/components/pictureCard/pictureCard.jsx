@@ -10,8 +10,7 @@ const PictureCard = ({
 	changeIsLikedOf,
 	isLiked,
 }) => {
-  const { pictureId, pictureSrc, title, date_created, description } 
-    = useMemo(() => picture, [picture])
+  const {pictureId, pictureSrc, title, date_created, description} = picture;
 
 	const handleClickLike = () => {
 		changeIsLikedOf(picture);

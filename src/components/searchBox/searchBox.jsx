@@ -23,7 +23,7 @@ const SearchBox = () => {
 		}
 		const equalIndex = queryString.indexOf('=');
 		const searchedRange= queryString.substring(1, equalIndex);
-		const searchedContent = queryString.substring(equalIndex+1);
+		const searchedContent = decodeURI(queryString.substring(equalIndex+1));
 		setSearchRange(searchedRange)
 		setSearchContent(searchedContent)
 	}, [location])
@@ -41,6 +41,7 @@ const SearchBox = () => {
 	};
 
 	const handleSearchContentKeyDown = (event) => {
+		// react-form 적용 가능
 		if (event.key === 'Enter') {
 			search();
 		}

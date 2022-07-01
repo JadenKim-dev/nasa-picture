@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,13 +11,12 @@ const PictureCardList = ({
 	onChangePictureList,
 	likePictureIdList,
 	changeIsLikedOf,
-}) => {
-	const [isLoading, setIsLoading] = useState(true);
+}) => { // 클래스 useState vs 함수형 useState
 	const [isAllLoaded, setIsAllLoaded] = useState(false);
 	const [pageNum, setPageNum] = useState(0);
-	const [lastOfPage, setLastOfPage] = useState(null);
-
 	const [currentViewableCardNum, setCurrentViewableCardNum] = useState(0);
+	const lastOfPage = useRef(null);
+	const permitObserve = useRef(true);
 
 	const location = useLocation();
 
@@ -39,23 +38,21 @@ const PictureCardList = ({
 		setCurrentViewableCardNum(0);
 		setIsAllLoaded(false);
 		setPageNum(0);
+		permitObserve.current = true;
 	}, [location])
 
 	useEffect(() => {
-		let observer;
-		if (lastOfPage) {
-			observer = new IntersectionObserver(onIntersect, { threshold: 0.1 });
-			observer.observe(lastOfPage);
+		const observer = new IntersectionObserver(onIntersect, { threshold: 0.1 });
+		if (lastOfPage.current) {
+			observer.observe(lastOfPage.current);
 		}
-		return () => observer && observer.disconnect();
-	}, [lastOfPage]);
+		return () => { observer.disconnect(); };
+	}, [location]);
 
-	const onIntersect = ([entry], observer) => {
-		if (entry.isIntersecting && !isLoading) {
-			setIsLoading(true);
-			observer.unobserve(lastOfPage);
+	const onIntersect = ([entry]) => {
+		if (entry.isIntersecting) {
+			permitObserve.current = false;
 			setCurrentViewableCardNum((prevIdx) => prevIdx + 36);
-			observer.observe(lastOfPage);
 		}
 	};
 
@@ -63,30 +60,32 @@ const PictureCardList = ({
 		if (pictureList.length < currentViewableCardNum) {
 			setPageNum((prevPageNum) => prevPageNum + 1);
 		} else {
-			setIsLoading(false);
+			permitObserve.current = true;
 		}
 	}, [currentViewableCardNum]);
 
 	useEffect(() => {
+		console.log(currentViewableCardNum, pageNum)
 		if (pageNum > 0) {
-			new Promise((resolve, reject) => {
-				resolve(getMoreItem());
-			}).then(() => {
-				setIsLoading(false);
-			});
-		}
-		if (pageNum > 5) {
-			setIsAllLoaded(true);
+			getMoreItem()
+				.then(() => {
+					permitObserve.current = true;
+				})
+			  .catch((e) => {
+				// error boundary 처리
+					console.error(e)
+				});
 		}
 	}, [pageNum]);
 
-	const getMoreItem = async () => {
-		await axios
+	const getMoreItem = () =>
+		axios
 			.get(`${targetUrl}&page=${pageNum}`)
 			.then((res) => {
 				const pictureItems = res.data.collection.items;
 				if (!pictureItems.length) {
 					setIsAllLoaded(true);
+					
 					return;
 				}
 				const pictures = pictureItems
@@ -99,20 +98,26 @@ const PictureCardList = ({
 				onChangePictureList(pictureList.concat(pictures));
 			})
 			.catch((e) => {
-				console.log(e);
+				throw e;
 			});
-	};
+	
 
 	const parseSearchContent = (queryString) => {
-		return queryString.substr(queryString.indexOf('=') + 1);
+		return decodeURI(queryString.substr(queryString.indexOf('=') + 1));
 	};
 
 	return (
 		<>
-			<div className={styles.cardList}>
+			<div className=''>
 				{isAllLoaded && !pictureList.length && (
-					<p>{parseSearchContent(location.search)}에 대한 검색결과가 없습니다.</p>
+					<p className={styles.noSuchPictureText}>
+						<span className={styles.searchContentText}>
+							'{parseSearchContent(location.search)}'
+						</span>에 대한 검색결과가 없습니다.
+					</p>
 				)}
+			</div>
+			<div className={styles.cardList}>
 				{pictureList.slice(0, currentViewableCardNum).map((picture) => (
 					<PictureCard
 						key={picture.pictureId}
@@ -123,17 +128,16 @@ const PictureCardList = ({
 				))}
 			</div>
 
-			{!isAllLoaded && (
 				<div style={{marginTop:40, display:'flex', justifyContent:'center'}}>
-					{!isLoading && <div ref={setLastOfPage}></div>}
+					<div ref={lastOfPage}></div>
+					{!isAllLoaded && (
 					<div className="spinner-border text-primary" role="status">
 						<span className="sr-only">Loading...</span>
 					</div>
+								)}
 				</div>	
-			)}
 		</>
 	);
 };
 
-// ref를 로딩바에 넣을 경우, 처음 페이지 로딩 시 page에 대한 useEffect로 인해 getMoreItem + 로딩바에 대한 접근으로 인해 intersection 후 getMoreItem으로 총 2번 로딩이 일어나는 오류 발생
 export default PictureCardList;

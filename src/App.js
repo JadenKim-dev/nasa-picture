@@ -7,7 +7,7 @@ import SearchBox from './components/searchBox/searchBox';
 import PictureCardList from './components/pictureCardList/pictureCardList';
 import styles from './App.module.scss';
 import LikeListSidebar from './components/likeListSidebar/likeListSidebar';
-import { getItem, setItem } from './sessionStorage';
+import { getItem, setItem } from './localStorage';
 import heartFilledBlue from './heart_filled_blue.svg'
 import heartFilledBlack from './heart_filled_black.svg'
 
@@ -35,7 +35,7 @@ const App = () => {
 		}
 	};
 
-	const handleClickSidebarButton = () => {
+	const changeIsSidebarOpen = () => {
 		setIsSidebarOpen((prevIsOpen) => !prevIsOpen);
 	};
 
@@ -73,7 +73,7 @@ const App = () => {
 							className={styles.sidebarButton}
 							color="secondary"
 							data-clicked={isSidebarOpen}
-							onClick={handleClickSidebarButton}
+							onClick={changeIsSidebarOpen}
 						>
 							{isSidebarOpen 
 								? <img src={heartFilledBlue} className={styles.sidebarButton__heart} alt="heart open" />
