@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Button } from 'reactstrap';
 import 'intersection-observer';
 
 import SearchBox from './components/searchBox/searchBox';
 import PictureCardList from './components/pictureCardList/pictureCardList';
-import './App.scss';
+import styles from './App.module.scss';
 import LikeListSidebar from './components/likeListSidebar/likeListSidebar';
 import { getItem, setItem } from './sessionStorage';
 import heartFilledBlue from './heart_filled_blue.svg'
@@ -54,43 +54,38 @@ const App = () => {
 	return (
 		<BrowserRouter>
 			<header>
-				<Container>
 					<section>
-						<Row className="titleRow">
-							<Col xs={{ size: 4, offset: 4 }} className="headerCol">
-								<h1>NASA 사진 검색</h1>
-							</Col>
-						</Row>
+						<div className={styles.titleRow}>
+							<h1 className={styles.title}>NASA 사진 검색</h1>
+						</div>
 					</section>
 					<section>
-						<Row className="searchBoxRow">
-							<Col xs={{ size: 6, offset: 3 }} className="headerCol">
-								<SearchBox />
-							</Col>
-						</Row>
+						<div className={styles.searchBoxRow}>
+							<SearchBox />
+						</div>
 					</section>
-				</Container>
 			</header>
 			<main>
-				<Container>
-					<section>
-						<Row className="sidebarButtonRow">
-							<Button
-								className="sidebarButton"
-								color="secondary"
-								data-clicked={isSidebarOpen}
-								onClick={handleClickSidebarButton}
-							>
-								{isSidebarOpen 
-									? <img src={heartFilledBlue} alt="heart open" />
-									: <img src={heartFilledBlack} alt="heart close" />
-								}
-								<span className="sidebarButton__text">좋아요 리스트 보기</span>
-							</Button>
-						</Row>
-					</section>
-					<section>
-						<article>
+			<Container style={{ paddingLeft: 40, paddingRight: 40 }}>
+				<section>
+					<div className={styles.sidebarButtonRow}>
+						<Button
+							className={styles.sidebarButton}
+							color="secondary"
+							data-clicked={isSidebarOpen}
+							onClick={handleClickSidebarButton}
+						>
+							{isSidebarOpen 
+								? <img src={heartFilledBlue} className={styles.sidebarButton__heart} alt="heart open" />
+								: <img src={heartFilledBlack} className={styles.sidebarButton__heart} alt="heart close" />
+							}
+							<span className={styles.sidebarButton__text}>좋아요 리스트 보기</span>
+						</Button>
+					</div>
+				</section>
+				<section>
+					<article>
+						<div className={styles.cardListRow}>
 							<Routes>
 								<Route
 									path="*"
@@ -104,8 +99,9 @@ const App = () => {
 									}
 								></Route>
 							</Routes>
-						</article>
-					</section>
+						</div>
+					</article>
+				</section>
 				</Container>
 			</main>
 			<aside>
