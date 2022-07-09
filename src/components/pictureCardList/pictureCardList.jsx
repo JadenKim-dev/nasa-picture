@@ -65,7 +65,6 @@ const PictureCardList = ({
 	}, [currentViewableCardNum]);
 
 	useEffect(() => {
-		console.log(currentViewableCardNum, pageNum)
 		if (pageNum > 0) {
 			getMoreItem()
 				.then(() => {
